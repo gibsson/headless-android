@@ -26,11 +26,8 @@ PRODUCT_PACKAGES += \
     InputDevices \
     Keyguard \
     LatinIME \
-    Phone \
     PrintSpooler \
     Provision \
-    Settings \
-    SystemUI \
     TestingCamera \
     WAPPushManager \
     apache-xml \
@@ -104,8 +101,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     ContactsProvider \
     DefaultContainerService \
-    Home \
-    TelephonyProvider \
     UserDictionaryProvider \
     atrace \
     libandroidfw \
@@ -150,8 +145,6 @@ PRODUCT_PACKAGES += \
 # from build/target/product/core_minimal.mk
 PRODUCT_PACKAGES += \
     BackupRestoreConfirmation \
-    DownloadProvider \
-    HTMLViewer \
     MediaProvider \
     PackageInstaller \
     SettingsProvider \
@@ -385,7 +378,10 @@ PRODUCT_COPY_FILES += \
     device/generic/goldfish/fstab.goldfish:root/fstab.goldfish
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.config.headless=1
+    ro.config.headless=1 \
+    config.disable_noncore=true \
+    config.disable_systemui=true \
+    ro.config.low_ram=true
 
 PRODUCT_NAME := mini_headless
 PRODUCT_DEVICE := headless
