@@ -1,0 +1,36 @@
+From a8218d8ada0cbb1909bdf4e85bf2aad70690b9b8 Mon Sep 17 00:00:00 2001
+From: Gary Bisson <bisson.gary@gmail.com>
+Date: Sat, 26 Apr 2014 12:28:50 -0700
+Subject: [PATCH] Headless: prevent boot animation to start
+
+---
+ services/surfaceflinger/SurfaceFlinger.cpp | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
+index 9d94c87..487c3e6 100644
+--- a/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -633,9 +633,16 @@ int32_t SurfaceFlinger::allocateHwcDisplayId(DisplayDevice::DisplayType type) {
+ }
+ 
+ void SurfaceFlinger::startBootAnim() {
+-    // start boot animation
+-    property_set("service.bootanim.exit", "0");
+-    property_set("ctl.start", "bootanim");
++    char value[PROPERTY_VALUE_MAX];
++    int headless;
++
++    property_get("ro.config.headless", value, "0");
++    headless = atoi(value);
++    if (headless == 0) {
++	    // start boot animation
++	    property_set("service.bootanim.exit", "0");
++	    property_set("ctl.start", "bootanim");
++    }
+ }
+ 
+ size_t SurfaceFlinger::getMaxTextureSize() const {
+-- 
+1.9.2
+

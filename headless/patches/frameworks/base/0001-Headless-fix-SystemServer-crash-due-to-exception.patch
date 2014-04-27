@@ -1,0 +1,27 @@
+From 9b650c332f08e4f1414e35760c8a730e3638303d Mon Sep 17 00:00:00 2001
+From: Gary Bisson <bisson.gary@gmail.com>
+Date: Sat, 26 Apr 2014 12:09:38 -0700
+Subject: [PATCH] Headless: fix SystemServer crash due to exception
+
+---
+ core/java/android/view/SurfaceControl.java | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/view/SurfaceControl.java b/core/java/android/view/SurfaceControl.java
+index b22d5cf..0d0ade4 100644
+--- a/core/java/android/view/SurfaceControl.java
++++ b/core/java/android/view/SurfaceControl.java
+@@ -232,7 +232,9 @@ public class SurfaceControl {
+                     new Throwable());
+         }
+ 
+-        checkHeadless();
++        if (HEADLESS) {
++		Log.w(TAG, "Device is headless /!\\");
++	}
+ 
+         mName = name;
+         mNativeObject = nativeCreate(session, name, w, h, format, flags);
+-- 
+1.9.2
+
